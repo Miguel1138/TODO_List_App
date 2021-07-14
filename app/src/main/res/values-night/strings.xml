@@ -2,4 +2,8 @@
 <resources>
     <string name="daily_task">Tarefas de Hoje</string>
     <string name="desc_fab_task">Botão para criar nova tarefa</string>
+    <string name="description">Descrição</string>
+    <string name="date">Data</string>
+    <string name="time">Horário</string>
+    <string name="create_task">Criar Tarefa</string>
 </resources>

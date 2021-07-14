@@ -1,5 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">To Dew it</string>
     <string name="daily_task">Tarefas de Hoje</string>
     <string name="desc_fab_task">Botão para criar nova tarefa</string>
 </resources>

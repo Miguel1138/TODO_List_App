@@ -8,4 +8,6 @@
     <string name="time">Horário</string>
     <string name="cancel">Cancelar</string>
     <string name="create_task">Criar Tarefa</string>
+    <string name="edit">Editar</string>
+    <string name="delete">Deletar</string>
 </resources>

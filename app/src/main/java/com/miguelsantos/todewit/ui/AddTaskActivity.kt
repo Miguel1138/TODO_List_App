@@ -1,5 +1,6 @@
 package com.miguelsantos.todewit.ui
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -71,6 +72,8 @@ class AddTaskActivity : AppCompatActivity() {
                 hour = binding.taskInputLayoutTime.text
             )
             TaskDataSource.insertTask(task)
+            setResult(Activity.RESULT_OK)
+            finish()
         }
     }
 

@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">To Dew it</string>
     <string name="daily_task">Tarefas de Hoje</string>
     <string name="desc_fab_task">Botão para criar nova tarefa</string>
+    <string name="title">Título</string>
     <string name="description">Descrição</string>
     <string name="date">Data</string>
     <string name="time">Horário</string>
+    <string name="cancel">Cancelar</string>
     <string name="create_task">Criar Tarefa</string>
+    <string name="edit">Editar</string>
+    <string name="delete">Deletar</string>
 </resources>

@@ -1,156 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.AddTaskActivity">
+    android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/task_toolbar"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/gray"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/ic_baseline_navigate_before_24"
-        app:navigationIconTint="@color/white"
-        app:title="@string/create_task"
-        app:titleTextColor="@color/white" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_vertical_begin"
-        android:layout_width="1dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="32dp" />
+        tools:context=".ui.AddTaskActivity">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_vertical_end"
-        android:layout_width="1dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="32dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_horizontal_form_top"
-        android:layout_width="wrap_content"
-        android:layout_height="1dp"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.15" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/task_input_layout_title"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/title"
-        android:textColorHint="@color/black"
-        app:layout_constraintEnd_toEndOf="@id/guideline_vertical_end"
-        app:layout_constraintStart_toStartOf="@id/guideline_vertical_begin"
-        app:layout_constraintTop_toTopOf="@id/guideline_horizontal_form_top">
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/task_edt_title"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/task_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_baseline_navigate_before_24"
+            app:navigationIconTint="@color/white"
+            app:title="@string/create_task"
+            app:titleTextColor="@color/white" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/task_input_layout_description"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:hint="@string/description"
-        android:textColorHint="@color/black"
-        app:layout_constraintEnd_toEndOf="@id/guideline_vertical_end"
-        app:layout_constraintStart_toStartOf="@id/guideline_vertical_begin"
-        app:layout_constraintTop_toBottomOf="@id/task_input_layout_title">
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/task_edt_description"
-            android:layout_width="match_parent"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_vertical_begin"
+            android:layout_width="1dp"
             android:layout_height="wrap_content"
-            android:gravity="start"
-            android:inputType="textMultiLine"
-            android:lines="5" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="32dp" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/task_input_layout_date"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:hint="@string/date"
-        android:textColorHint="@color/black"
-        app:layout_constraintEnd_toStartOf="@id/task_input_layout_time"
-        app:layout_constraintStart_toStartOf="@id/guideline_vertical_begin"
-        app:layout_constraintTop_toBottomOf="@id/task_input_layout_description"
-        app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/task_edt_date"
-            android:layout_width="match_parent"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_vertical_end"
+            android:layout_width="1dp"
             android:layout_height="wrap_content"
-            android:focusable="false"
-            android:inputType="none" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="32dp" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/task_input_layout_time"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:hint="@string/time"
-        android:textColorHint="@color/black"
-        app:layout_constraintEnd_toEndOf="@id/guideline_vertical_end"
-        app:layout_constraintStart_toEndOf="@id/task_input_layout_date"
-        app:layout_constraintTop_toBottomOf="@id/task_input_layout_description"
-        app:startIconDrawable="@drawable/ic_baseline_access_time_24">
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_horizontal_form_top"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.15" />
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/task_edt_time"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/task_input_layout_title"
+            style="@style/Widget.ToDewIt.InputLayout"
+            android:hint="@string/title"
+            app:layout_constraintEnd_toEndOf="@id/guideline_vertical_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_vertical_begin"
+            app:layout_constraintTop_toTopOf="@id/guideline_horizontal_form_top">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/task_edt_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLength="40" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/task_input_layout_description"
+            style="@style/Widget.ToDewIt.InputLayout"
+            android:layout_marginTop="16dp"
+            android:hint="@string/description"
+            app:layout_constraintEnd_toEndOf="@id/guideline_vertical_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_vertical_begin"
+            app:layout_constraintTop_toBottomOf="@id/task_input_layout_title">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/task_edt_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:inputType="textMultiLine"
+                android:lines="5" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/task_input_layout_date"
+            style="@style/Widget.ToDewIt.InputLayout"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:hint="@string/date"
+            app:layout_constraintEnd_toStartOf="@id/task_input_layout_time"
+            app:layout_constraintStart_toStartOf="@id/guideline_vertical_begin"
+            app:layout_constraintTop_toBottomOf="@id/task_input_layout_description"
+            app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/task_edt_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/task_input_layout_time"
+            style="@style/Widget.ToDewIt.InputLayout"
+            android:layout_marginTop="16dp"
+            android:hint="@string/time"
+            app:layout_constraintEnd_toEndOf="@id/guideline_vertical_end"
+            app:layout_constraintStart_toEndOf="@id/task_input_layout_date"
+            app:layout_constraintTop_toBottomOf="@id/task_input_layout_description"
+            app:startIconDrawable="@drawable/ic_baseline_access_time_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/task_edt_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_horizontal_top_button"
+            android:layout_width="1dp"
             android:layout_height="wrap_content"
-            android:focusable="false"
-            android:inputType="none" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.82" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_horizontal_top_button"
-        android:layout_width="1dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.75" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/task_btn_create_task"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/red"
+            android:text="@string/create_task"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/guideline_vertical_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_vertical_begin"
+            app:layout_constraintTop_toTopOf="@+id/guideline_horizontal_top_button" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/task_btn_create_task"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/red"
-        android:text="@string/create_task"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@id/guideline_vertical_end"
-        app:layout_constraintStart_toStartOf="@id/guideline_vertical_begin"
-        app:layout_constraintTop_toTopOf="@+id/guideline_horizontal_top_button" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/task_btn_cancel"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/cancel"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/guideline_vertical_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_vertical_begin"
+            app:layout_constraintTop_toBottomOf="@id/task_btn_create_task" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/task_btn_cancel"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/cancel"
-        android:textAllCaps="false"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@id/guideline_vertical_end"
-        app:layout_constraintStart_toStartOf="@id/guideline_vertical_begin"
-        app:layout_constraintTop_toBottomOf="@id/task_btn_create_task" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
+

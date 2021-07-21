@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:contentDescription="@string/desc_fab_task"
-        android:elevation="8dp"
+        android:elevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/guideline_vertical_end"
         app:srcCompat="@drawable/ic_baseline_add_24" />

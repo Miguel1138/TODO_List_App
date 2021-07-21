@@ -2,6 +2,7 @@ package com.miguelsantos.todewit.ui
 
 import android.app.Activity
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
@@ -9,6 +10,7 @@ import com.google.android.material.timepicker.TimeFormat
 import com.miguelsantos.todewit.databinding.ActivityAddTaskBinding
 import com.miguelsantos.todewit.datasource.TaskDataSource
 import com.miguelsantos.todewit.extensions.format
+import com.miguelsantos.todewit.extensions.formatTime
 import com.miguelsantos.todewit.extensions.text
 import com.miguelsantos.todewit.model.Task
 import java.util.*
@@ -27,6 +29,10 @@ class AddTaskActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAddTaskBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar.apply {
+            setSupportActionBar(binding.taskToolbar)
+            this?.setHomeButtonEnabled(true)
+        }
 
         if (intent.hasExtra(TASK_ID)) {
             val taskId = intent.getIntExtra(TASK_ID, 0)
@@ -37,6 +43,16 @@ class AddTaskActivity : AppCompatActivity() {
             }
         }
         setListeners()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun setListeners() {
@@ -57,11 +73,8 @@ class AddTaskActivity : AppCompatActivity() {
                 .setTimeFormat(TimeFormat.CLOCK_24H)
                 .build()
             timePicker.addOnPositiveButtonClickListener {
-                val hour =
-                    if (timePicker.hour in 0..9) "0${timePicker.hour}" else "${timePicker.hour}"
-
-                val minute =
-                    if (timePicker.minute in 0..9) "0${timePicker.minute}" else "${timePicker.minute}"
+                val hour = formatTime(timePicker.hour)
+                val minute = formatTime(timePicker.minute)
 
                 binding.taskInputLayoutTime.text = "$hour:$minute"
             }

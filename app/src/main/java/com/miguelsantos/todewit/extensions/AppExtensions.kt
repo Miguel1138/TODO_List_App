@@ -13,3 +13,5 @@ var TextInputLayout.text: String
     set(value) {
         editText?.setText(value)
     }
+
+fun formatTime(input: Int):String = if (input in 0..9) "0$input" else "$input"

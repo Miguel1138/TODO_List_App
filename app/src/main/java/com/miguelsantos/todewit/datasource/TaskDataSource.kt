@@ -8,6 +8,15 @@ object TaskDataSource {
     fun getList() = list
 
     fun insertTask(task: Task) {
-        list.add(task.copy(id = list.size + 1))
+        if (task.id == 0) {
+            list.add(task.copy(id = list.size + 1))
+        } else {
+            list.remove(task)
+            list.add(task)
+        }
     }
+
+    fun findById(taskId: Int) = list.find { task -> taskId == task.id }
+
+    fun deleteTask(task: Task) { list.remove(task) }
 }

@@ -38,8 +38,8 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCa
             val imgMore = binding.itemImageMore
             val popupMenu = PopupMenu(imgMore.context, imgMore)
             popupMenu.menuInflater.inflate(R.menu.menu_popup_more, popupMenu.menu)
-            popupMenu.setOnMenuItemClickListener {
-                when (it.itemId) {
+            popupMenu.setOnMenuItemClickListener { menu ->
+                when (menu.itemId) {
                     R.id.action_edit -> listenerEdit(task)
                     R.id.action_delete -> listenerDelete(task)
                 }

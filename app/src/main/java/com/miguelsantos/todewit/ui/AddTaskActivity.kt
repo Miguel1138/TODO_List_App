@@ -18,6 +18,7 @@ class AddTaskActivity : AppCompatActivity() {
     companion object {
         private const val DATE_PICKER_TAG: String = "date_picker_tag"
         private const val TIME_PICKER_TAG: String = "time_picker_tag"
+        const val TASK_ID = "task_id"
     }
 
     private lateinit var binding: ActivityAddTaskBinding
@@ -27,6 +28,14 @@ class AddTaskActivity : AppCompatActivity() {
         binding = ActivityAddTaskBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        if (intent.hasExtra(TASK_ID)) {
+            val taskId = intent.getIntExtra(TASK_ID, 0)
+            TaskDataSource.findById(taskId)?.let { task ->
+                binding.taskInputLayoutTitle.text = task.title
+                binding.taskInputLayoutTime.text = task.hour
+                binding.taskInputLayoutDate.text = task.date
+            }
+        }
         setListeners()
     }
 
@@ -69,7 +78,8 @@ class AddTaskActivity : AppCompatActivity() {
             val task = Task(
                 title = binding.taskInputLayoutTitle.text,
                 date = binding.taskInputLayoutDate.text,
-                hour = binding.taskInputLayoutTime.text
+                hour = binding.taskInputLayoutTime.text,
+                id = intent.getIntExtra(TASK_ID, 0)
             )
             TaskDataSource.insertTask(task)
             setResult(Activity.RESULT_OK)

@@ -6,7 +6,6 @@
     android:layout_height="wrap_content"
     android:padding="16dp">
 
-
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/item_task_title"
         android:layout_width="wrap_content"

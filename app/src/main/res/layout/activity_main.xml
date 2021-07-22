@@ -31,6 +31,10 @@
         app:layout_constraintStart_toStartOf="@id/guideline_vertical_begin"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <include
+        android:id="@+id/layout_empty"
+        layout="@layout/empty_state" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/main_recycler_tasks"
         android:layout_width="match_parent"

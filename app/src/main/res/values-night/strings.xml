@@ -11,4 +11,6 @@
     <string name="create_task">Criar Tarefa</string>
     <string name="edit">Editar</string>
     <string name="delete">Deletar</string>
+    <string name="empty_state_label">Ainda temos muito o que fazer hoje.</string>
+
 </resources>

@@ -3,6 +3,7 @@ package com.miguelsantos.todewit.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.miguelsantos.todewit.databinding.ActivityMainBinding
 import com.miguelsantos.todewit.datasource.TaskDataSource
@@ -51,8 +52,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateList() {
+        val list = TaskDataSource.getList()
+        binding.layoutEmpty.emptyState.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
         adapter.notifyDataSetChanged()
-        adapter.submitList(TaskDataSource.getList())
+        adapter.submitList(list)
     }
     
 }

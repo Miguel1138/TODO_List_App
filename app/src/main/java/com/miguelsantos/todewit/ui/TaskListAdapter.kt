@@ -38,11 +38,16 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCa
             binding.itemTaskHour.text = task.hour
             binding.itemTaskDate.text = task.date
             binding.itemImageMore.setOnClickListener { showPopUp(task) }
-            binding.itemTaskCheckDone.setOnClickListener { strikeThroughText() }
+            binding.itemTaskCheckDone.apply {
+                setOnClickListener { taskDone(task) }
+                // Remove the selected state of the next item after erasing an item above this.
+                isChecked = task.isDone
+            }
         }
 
-        private fun strikeThroughText() {
+        private fun taskDone(task: Task) {
             binding.itemTaskTitle.strike = binding.itemTaskCheckDone.isChecked
+            task.isDone = binding.itemTaskCheckDone.isChecked
         }
 
         @SuppressLint("RestrictedApi")

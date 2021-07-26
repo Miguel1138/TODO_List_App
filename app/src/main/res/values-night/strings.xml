@@ -12,5 +12,7 @@
     <string name="edit">Editar</string>
     <string name="delete">Deletar</string>
     <string name="empty_state_label">Ainda temos muito o que fazer hoje.</string>
+    <string name="action_select_all">Selecionar todas </string>
+    <string name="action_clear_finished_tasks">Excluir tarefas concluídas</string>
 
 </resources>

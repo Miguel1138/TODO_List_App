@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/main_toolbar"
+        style="@style/Widget.MaterialComponents.Toolbar.PrimarySurface"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/daily_task" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_vertical_begin"
         android:layout_width="1dp"
@@ -19,17 +29,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.97" />
-
-    <TextView
-        android:id="@+id/main_txt_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/daily_task"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/guideline_vertical_begin"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <include
         android:id="@+id/layout_empty"
@@ -45,7 +44,7 @@
         app:layout_constraintBottom_toTopOf="@id/main_fab_add_task"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/main_txt_title"
+        app:layout_constraintTop_toBottomOf="@id/main_toolbar"
         tools:itemCount="8"
         tools:listitem="@layout/item_task" />
 

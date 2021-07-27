@@ -1,10 +1,12 @@
 package com.miguelsantos.todewit.ui
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import android.graphics.drawable.InsetDrawable
 import android.os.Build
 import android.util.TypedValue
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.PopupMenu
@@ -35,6 +37,7 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCa
 
         fun bind(task: Task) {
             binding.itemTaskTitle.text = task.title
+            binding.itemTaskDescription.text = task.description
             binding.itemTaskHour.text = task.hour
             binding.itemTaskDate.text = task.date
             binding.itemImageMore.setOnClickListener { showPopUp(task) }
@@ -43,13 +46,34 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCa
                 // Remove the selected state of the next item after erasing an item above this.
                 isChecked = task.isDone
             }
+
+            // Card view Configuration
+            // disable onClikclistener in landScape mode, at least for now.
+            if (binding.root.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                binding.itemTaskDescription.visibility = View.VISIBLE
+                binding.itemTaskCardView.isClickable = false
+                binding.itemTaskCardView.isFocusable = false
+            } else {
+                binding.itemTaskDescription.visibility = View.GONE
+                binding.itemTaskCardView.isClickable = true
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    binding.itemTaskCardView.isFocusable = true
+                }
+                binding.itemTaskCardView.setOnClickListener {
+                    with(binding.itemTaskDescription) {
+                        visibility = if (visibility == View.GONE) View.VISIBLE else View.GONE
+                    }
+                }
+            }
         }
 
+        // strike the title card text for done task
         private fun taskDone(task: Task) {
             binding.itemTaskTitle.strike = binding.itemTaskCheckDone.isChecked
             task.isDone = binding.itemTaskCheckDone.isChecked
         }
 
+        // menu popUp
         @SuppressLint("RestrictedApi")
         private fun showPopUp(task: Task) {
             val imgMore = binding.itemImageMore
@@ -64,7 +88,7 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCa
                 return@setOnMenuItemClickListener true
             }
 
-            // Showing Menu Icons
+            // Show Menu Icons
             if (popupMenu.menu is MenuBuilder) {
                 val menuBuilder = popupMenu.menu as MenuBuilder
                 menuBuilder.setOptionalIconsVisible(true)

@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -19,7 +20,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:navigationIcon="@drawable/ic_baseline_navigate_before_24"
-            app:title="@string/create_task"
+            app:title="@string/label_create_task"
             app:titleTextColor="@color/white" />
 
         <androidx.constraintlayout.widget.Guideline
@@ -46,7 +47,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/task_input_layout_title"
             style="@style/Widget.ToDewIt.InputLayout"
-            android:hint="@string/title"
+            android:hint="@string/hint_title"
             app:layout_constraintEnd_toEndOf="@id/guideline_vertical_end"
             app:layout_constraintStart_toStartOf="@id/guideline_vertical_begin"
             app:layout_constraintTop_toTopOf="@id/guideline_horizontal_form_top">
@@ -63,7 +64,7 @@
             android:id="@+id/task_input_layout_description"
             style="@style/Widget.ToDewIt.InputLayout"
             android:layout_marginTop="16dp"
-            android:hint="@string/description"
+            android:hint="@string/hint_description"
             app:layout_constraintEnd_toEndOf="@id/guideline_vertical_end"
             app:layout_constraintStart_toStartOf="@id/guideline_vertical_begin"
             app:layout_constraintTop_toBottomOf="@id/task_input_layout_title">
@@ -82,7 +83,7 @@
             style="@style/Widget.ToDewIt.InputLayout"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:hint="@string/date"
+            android:hint="@string/hint_date"
             app:layout_constraintEnd_toStartOf="@id/task_input_layout_time"
             app:layout_constraintStart_toStartOf="@id/guideline_vertical_begin"
             app:layout_constraintTop_toBottomOf="@id/task_input_layout_description"
@@ -100,7 +101,7 @@
             android:id="@+id/task_input_layout_time"
             style="@style/Widget.ToDewIt.InputLayout"
             android:layout_marginTop="16dp"
-            android:hint="@string/time"
+            android:hint="@string/hint_time"
             app:layout_constraintEnd_toEndOf="@id/guideline_vertical_end"
             app:layout_constraintStart_toEndOf="@id/task_input_layout_date"
             app:layout_constraintTop_toBottomOf="@id/task_input_layout_description"
@@ -114,25 +115,19 @@
                 android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_horizontal_top_button"
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.81" />
-
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/task_btn_create_task"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@color/red"
-            android:text="@string/create_task"
+            android:text="@string/label_create_task"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/guideline_vertical_end"
             app:layout_constraintStart_toStartOf="@id/guideline_vertical_begin"
-            app:layout_constraintTop_toTopOf="@+id/guideline_horizontal_top_button" />
+            app:layout_constraintTop_toBottomOf="@+id/task_input_layout_date" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/task_btn_cancel"
@@ -140,7 +135,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@string/cancel"
+            android:text="@string/label_cancel"
             android:textAllCaps="false"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@id/guideline_vertical_end"

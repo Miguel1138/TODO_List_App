@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import com.miguelsantos.todewit.R
 import com.miguelsantos.todewit.databinding.ActivityMainBinding
 import com.miguelsantos.todewit.datasource.TaskDataSource
@@ -26,24 +27,30 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Toolbar
         supportActionBar.apply {
             setSupportActionBar(binding.mainToolbar)
             binding.mainToolbar.overflowIcon =
                 ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_baseline_more_horiz_24)
         }
 
+        // Recycler View
+        binding.mainRecyclerTasks.layoutManager =
+            GridLayoutManager(this, resources.getInteger(R.integer.grid_column_count))
         binding.mainRecyclerTasks.adapter = adapter
-        updateList()
 
+        updateList()
         setListeners()
     }
 
     private fun setListeners() {
+        // Fab
         binding.mainFabAddTask.setOnClickListener {
             val intent = Intent(this, AddTaskActivity::class.java)
             startActivityForResult(intent, CREATE_MEW_TASK)
         }
 
+        // item_task listeners
         adapter.listenerEdit = { task ->
             val intent = Intent(this, AddTaskActivity::class.java)
             intent.putExtra(AddTaskActivity.TASK_ID, task.id)
@@ -68,6 +75,7 @@ class MainActivity : AppCompatActivity() {
         adapter.submitList(list)
     }
 
+    // Menu Configuration
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return true

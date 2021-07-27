@@ -1,16 +1,17 @@
 <resources>
     <string name="app_name">To Dew it</string>
-    <string name="daily_task">Tarefas de Hoje</string>
-    <string name="desc_fab_task">Botão para criar nova tarefa</string>
-    <string name="title">Título</string>
-    <string name="description">Descrição</string>
-    <string name="date">Data</string>
-    <string name="time">Horário</string>
-    <string name="cancel">Cancelar</string>
-    <string name="create_task">Criar Tarefa</string>
-    <string name="edit">Editar</string>
-    <string name="delete">Deletar</string>
+    <string name="label_daily_task">Tarefas de Hoje</string>
+    <string name="content_fab_task">Botão para criar nova tarefa</string>
+    <string name="hint_title">Título</string>
+    <string name="hint_description">Descrição</string>
+    <string name="hint_date">Data</string>
+    <string name="hint_time">Horário</string>
+    <string name="label_cancel">Cancelar</string>
+    <string name="label_create_task">Criar Tarefa</string>
+    <string name="action_edit">Editar</string>
+    <string name="action_delete">Deletar</string>
     <string name="empty_state_label">Ainda temos muito o que fazer hoje. </string>
     <string name="action_select_all">Selecionar todas</string>
     <string name="action_clear_finished_tasks">Apagar tarefas concluídas</string>
+    <string name="edit_task">Editar Tarefa</string>
 </resources>

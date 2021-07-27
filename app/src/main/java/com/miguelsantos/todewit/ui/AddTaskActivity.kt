@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import com.miguelsantos.todewit.R
 import com.miguelsantos.todewit.databinding.ActivityAddTaskBinding
 import com.miguelsantos.todewit.datasource.TaskDataSource
 import com.miguelsantos.todewit.extensions.format
@@ -42,6 +43,8 @@ class AddTaskActivity : AppCompatActivity() {
                 binding.taskInputLayoutTime.text = task.hour
                 binding.taskInputLayoutDate.text = task.date
             }
+            binding.taskBtnCreateTask.text = getString(R.string.edit_task)
+            binding.taskToolbar.title = getString(R.string.edit_task)
         }
         setListeners()
     }
@@ -82,12 +85,12 @@ class AddTaskActivity : AppCompatActivity() {
             timePicker.show(supportFragmentManager, TIME_PICKER_TAG)
         }
 
-        // Cancel
+        // Cancel Button
         binding.taskBtnCancel.setOnClickListener {
             finish()
         }
 
-        // Create Task
+        // Create Task button
         binding.taskBtnCreateTask.setOnClickListener {
             val task = Task(
                 title = binding.taskInputLayoutTitle.text,

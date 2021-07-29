@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
+    android:padding="8dp"
     app:cardElevation="2dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,9 +29,9 @@
             android:gravity="start"
             android:maxLength="40"
             android:maxLines="1"
+            android:textColor="?attr/colorPrimary"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="?attr/colorPrimary"
             app:layout_constraintEnd_toStartOf="@+id/item_image_more"
             app:layout_constraintStart_toEndOf="@id/item_task_check_done"
             app:layout_constraintTop_toTopOf="parent"
@@ -64,8 +65,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:textStyle="bold"
             android:textSize="16sp"
+            android:textStyle="bold"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/guideline_item_end"
@@ -89,13 +90,13 @@
             android:layout_width="wrap_content"
             android:layout_height="1dp"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.95" />
+            app:layout_constraintGuide_percent="0.90" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/item_image_more"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="8dp"
             app:layout_constraintStart_toStartOf="@id/guideline_item_end"
             app:layout_constraintTop_toTopOf="@id/item_task_title"
             app:srcCompat="@drawable/ic_baseline_more_vert_24" />

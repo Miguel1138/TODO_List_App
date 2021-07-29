@@ -4,24 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    tools:context=".ui.fragments.AddTaskFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/addTaskConstraint"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:context=".ui.AddTaskActivity">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/task_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/gray"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:navigationIcon="@drawable/ic_baseline_navigate_before_24"
-            app:title="@string/label_create_task"
-            app:titleTextColor="@color/white" />
+        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_vertical_begin"
@@ -143,6 +132,6 @@
             app:layout_constraintTop_toBottomOf="@id/task_btn_create_task" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </ScrollView>
+
 

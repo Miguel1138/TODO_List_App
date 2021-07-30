@@ -1,4 +1,4 @@
-package com.miguelsantos.todewit.ui.fragments
+package com.miguelsantos.todewit.ui.fragments.add
 
 import android.app.Activity
 import android.os.Bundle
@@ -11,13 +11,12 @@ import androidx.navigation.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
-import com.miguelsantos.todewit.R
 import com.miguelsantos.todewit.databinding.FragmentAddTaskBinding
 import com.miguelsantos.todewit.datasource.TaskDataSource
-import com.miguelsantos.todewit.extensions.format
-import com.miguelsantos.todewit.extensions.formatTime
-import com.miguelsantos.todewit.extensions.text
-import com.miguelsantos.todewit.model.Task
+import com.miguelsantos.todewit.datasource.model.Task
+import com.miguelsantos.todewit.util.extensions.format
+import com.miguelsantos.todewit.util.extensions.formatTime
+import com.miguelsantos.todewit.util.extensions.text
 import java.util.*
 
 
@@ -29,7 +28,6 @@ class AddTaskFragment : Fragment() {
         const val TASK_ID = "task_id"
     }
 
-    private val bundle: String? = null
     private val activity by lazy {
         requireActivity() as AppCompatActivity
     }
@@ -53,18 +51,6 @@ class AddTaskFragment : Fragment() {
             //binding..title = getString(R.string.edit_task)
         }*/
         //val args = AddTaskFragmentArgs.fromBundle(requireArguments())
-
-        val bundle = this.arguments
-       if (bundle != null) {
-           val taskId = bundle.getInt(TASK_ID)
-           TaskDataSource.findById(taskId)?.let { task ->
-               binding.taskInputLayoutTitle.text = task.title
-               binding.taskInputLayoutDescription.text = task.description
-               binding.taskInputLayoutTime.text = task.hour
-               binding.taskInputLayoutDate.text = task.date
-           }
-           binding.taskBtnCreateTask.text = getString(R.string.edit_task)
-       }
         setListeners()
 
         return binding.root
@@ -112,8 +98,8 @@ class AddTaskFragment : Fragment() {
             title = binding.taskInputLayoutTitle.text,
             description = binding.taskInputLayoutDescription.text,
             date = binding.taskInputLayoutDate.text,
-            hour = binding.taskInputLayoutTime.text
-            //id = activity.intent.getIntExtra(TASK_ID, 0)
+            hour = binding.taskInputLayoutTime.text,
+            id = activity.intent.getIntExtra(TASK_ID, 0)
         )
         TaskDataSource.insertTask(task)
         activity.setResult(Activity.RESULT_OK)

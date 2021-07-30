@@ -1,12 +1,16 @@
-package com.miguelsantos.todewit.model
+package com.miguelsantos.todewit.datasource.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
 data class Task(
     val title: String,
     val description: String,
     val hour: String,
     val date: String,
-    var isDone: Boolean = false,
-    val id: Int = 0
+    var isDone: Int = 0,
+    @PrimaryKey(autoGenerate = true) val id: Int
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

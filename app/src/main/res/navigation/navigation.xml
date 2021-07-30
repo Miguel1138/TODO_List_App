@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
     app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.miguelsantos.todewit.ui.fragments.HomeFragment"
+        android:name="com.miguelsantos.todewit.ui.fragments.home.HomeFragment"
         android:label="@string/label_daily_task"
-        app:layout="@layout/fragment_home">
-
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_addTaskFragment"
             app:destination="@id/addTaskFragment" />
@@ -17,10 +17,9 @@
 
     <fragment
         android:id="@+id/addTaskFragment"
-        android:name="com.miguelsantos.todewit.ui.fragments.AddTaskFragment"
+        android:name="com.miguelsantos.todewit.ui.fragments.add.AddTaskFragment"
         android:label="@string/label_create_task"
-        app:layout="@layout/fragment_add_task">
-
+        tools:layout="@layout/fragment_add_task">
         <action
             android:id="@+id/action_addTaskFragment_to_homeFragment"
             app:destination="@id/homeFragment" />

@@ -1,6 +1,6 @@
 package com.miguelsantos.todewit.datasource
 
-import com.miguelsantos.todewit.model.Task
+import com.miguelsantos.todewit.datasource.model.Task
 
 object TaskDataSource {
     private val list = arrayListOf<Task>()

@@ -1,22 +1,16 @@
-package com.miguelsantos.todewit.ui.fragments
+package com.miguelsantos.todewit.ui.fragments.home
 
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.miguelsantos.todewit.R
 import com.miguelsantos.todewit.databinding.FragmentHomeBinding
 import com.miguelsantos.todewit.datasource.TaskDataSource
 import com.miguelsantos.todewit.ui.TaskListAdapter
-import com.miguelsantos.todewit.ui.fragments.AddTaskFragment.Companion.TASK_ID
 
 class HomeFragment : Fragment() {
-
-    companion object {
-        private const val CREATE_MEW_TASK = 1010
-    }
 
     private lateinit var binding: FragmentHomeBinding
     private val adapter: TaskListAdapter by lazy {
@@ -34,10 +28,8 @@ class HomeFragment : Fragment() {
             GridLayoutManager(context, resources.getInteger(R.integer.grid_column_count))
         binding.homeFragmentRecyclerTasks.adapter = adapter
 
-
         setListeners()
         updateList()
-
         setHasOptionsMenu(true)
 
         return binding.root
@@ -52,18 +44,17 @@ class HomeFragment : Fragment() {
             R.id.action_select_all -> {
                 val list = TaskDataSource.getList()
                 // Uncheck all the checkboxes in case they are all already selected.
-                if (list.all { it.isDone }) {
-                    list.forEach { it.isDone = false }
+                if (list.all { it.isDone == 1 }) {
+                    list.forEach { it.isDone = 0 }
                 } else {
-                    list.filter { (!it.isDone) }
-                        .forEach { it.isDone = true }
-
+                    list.filter { it.isDone == 0 }
+                        .forEach { it.isDone = 1}
                 }
                 updateList()
                 true
             }
             R.id.action_clear_finished_tasks -> {
-                TaskDataSource.getList().apply { removeAll(filter { it.isDone }) }
+                TaskDataSource.getList().apply { removeAll(filter { it.isDone == 1}) }
                 updateList()
                 true
             }
@@ -89,13 +80,6 @@ class HomeFragment : Fragment() {
 
         // item_task listeners
         adapter.listenerEdit = { task ->
-            val bundle = Bundle().also {
-                it.putInt(TASK_ID, task.id)
-            }
-            this.arguments = bundle
-            findNavController().navigate(
-                HomeFragmentDirections.actionHomeFragmentToAddTaskFragment()
-            )
             // TODO: 28/07/2021 Pesquisar sobre data sharing entre fragmentos.
             //val intent = Intent(requireContext(), AddTaskFragment::class.java)
             //intent.putExtra(TASK_ID, task.id)

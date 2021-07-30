@@ -1,4 +1,4 @@
-package com.miguelsantos.todewit.extensions
+package com.miguelsantos.todewit.util.extensions
 
 import android.graphics.Paint
 import android.widget.TextView

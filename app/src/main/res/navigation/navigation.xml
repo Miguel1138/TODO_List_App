@@ -23,6 +23,12 @@
         <action
             android:id="@+id/action_addTaskFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <argument
+            android:name="task"
+            app:argType=".datasource.model.Task"
+            android:defaultValue="@null"
+            app:nullable="true"/>
+
     </fragment>
 
 </navigation>

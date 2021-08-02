@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.miguelsantos.todewit.R
 import com.miguelsantos.todewit.databinding.FragmentHomeBinding
@@ -74,16 +75,14 @@ class HomeFragment : Fragment() {
         // Fab
         binding.fabAddTask.setOnClickListener {
             it.findNavController().navigate(
-                HomeFragmentDirections.actionHomeFragmentToAddTaskFragment()
+               HomeFragmentDirections.actionHomeFragmentToAddTaskFragment()
             )
         }
 
         // item_task listeners
         adapter.listenerEdit = { task ->
-            // TODO: 28/07/2021 Pesquisar sobre data sharing entre fragmentos.
-            //val intent = Intent(requireContext(), AddTaskFragment::class.java)
-            //intent.putExtra(TASK_ID, task.id)
-            //startActivityForResult(intent, CREATE_MEW_TASK)
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToAddTaskFragment().setTask(task))
         }
 
         adapter.listenerDelete = { task ->

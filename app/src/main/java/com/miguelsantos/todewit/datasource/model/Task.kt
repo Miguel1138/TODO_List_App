@@ -1,5 +1,7 @@
 package com.miguelsantos.todewit.datasource.model
 
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -11,7 +13,28 @@ data class Task(
     val date: String,
     var isDone: Int = 0,
     @PrimaryKey(autoGenerate = true) val id: Int
-) {
+) : Parcelable {
+
+    constructor(parcel: Parcel) : this(
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readInt(),
+        parcel.readInt()
+    )
+
+    override fun describeContents(): Int = 0
+
+    // Parcelize the data
+    override fun writeToParcel(dest: Parcel?, flags: Int) {
+        dest?.writeString(title)
+        dest?.writeString(description)
+        dest?.writeString(hour)
+        dest?.writeString(date)
+        dest?.writeInt(isDone)
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -26,4 +49,13 @@ data class Task(
     override fun hashCode(): Int {
         return id
     }
+
+    companion object CREATOR : Parcelable.Creator<Task> {
+
+        override fun createFromParcel(parcel: Parcel): Task = Task(parcel)
+
+        override fun newArray(size: Int): Array<Task?> = arrayOfNulls(size)
+
+    }
+
 }

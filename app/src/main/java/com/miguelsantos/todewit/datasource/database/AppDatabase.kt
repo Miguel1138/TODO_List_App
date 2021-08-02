@@ -1,4 +1,4 @@
-package com.miguelsantos.todewit.datasource.room
+package com.miguelsantos.todewit.datasource.database
 
 import android.content.Context
 import androidx.room.Database
@@ -9,7 +9,7 @@ import com.miguelsantos.todewit.util.constants.Constants.taskDbConfig.DATABASE_N
 import com.miguelsantos.todewit.util.constants.Constants.taskDbConfig.DATABASE_VERSION
 
 @Database(entities = [Task::class], version = DATABASE_VERSION, exportSchema = false)
-abstract class AppDatabase() : RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
 
     abstract fun taskDao(): TaskDao
 
@@ -18,11 +18,10 @@ abstract class AppDatabase() : RoomDatabase() {
         @Volatile
         private var INSTANCE: AppDatabase? = null
 
-        fun getInstance(context: Context): AppDatabase {
-            return INSTANCE ?: synchronized(this) {
-                INSTANCE ?: buildDatabase(context)
+        fun getInstance(context: Context): AppDatabase = INSTANCE
+            ?: synchronized(this) {
+                INSTANCE ?: buildDatabase(context.applicationContext)
             }
-        }
 
         private fun buildDatabase(context: Context): AppDatabase =
             Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME).build()

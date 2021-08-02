@@ -11,6 +11,7 @@ import androidx.navigation.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import com.miguelsantos.todewit.R
 import com.miguelsantos.todewit.databinding.FragmentAddTaskBinding
 import com.miguelsantos.todewit.datasource.TaskDataSource
 import com.miguelsantos.todewit.datasource.model.Task
@@ -39,8 +40,9 @@ class AddTaskFragment : Fragment() {
     ): View {
         binding = FragmentAddTaskBinding.inflate(inflater, container, false)
 
-        /*if (activity.intent.hasExtra(TASK_ID)) {
-            val taskId = activity.intent.getIntExtra(TASK_ID, 0)
+        val extra = AddTaskFragmentArgs.fromBundle(requireArguments()).task
+        if(extra != null) {
+            val taskId = extra.id
             TaskDataSource.findById(taskId)?.let { task ->
                 binding.taskInputLayoutTitle.text = task.title
                 binding.taskInputLayoutDescription.text = task.description
@@ -48,9 +50,8 @@ class AddTaskFragment : Fragment() {
                 binding.taskInputLayoutDate.text = task.date
             }
             binding.taskBtnCreateTask.text = getString(R.string.edit_task)
-            //binding..title = getString(R.string.edit_task)
-        }*/
-        //val args = AddTaskFragmentArgs.fromBundle(requireArguments())
+            (requireActivity() as AppCompatActivity).supportActionBar?.title = getString(R.string.edit_task)
+        }
         setListeners()
 
         return binding.root
@@ -99,7 +100,7 @@ class AddTaskFragment : Fragment() {
             description = binding.taskInputLayoutDescription.text,
             date = binding.taskInputLayoutDate.text,
             hour = binding.taskInputLayoutTime.text,
-            id = activity.intent.getIntExtra(TASK_ID, 0)
+            id = 0
         )
         TaskDataSource.insertTask(task)
         activity.setResult(Activity.RESULT_OK)

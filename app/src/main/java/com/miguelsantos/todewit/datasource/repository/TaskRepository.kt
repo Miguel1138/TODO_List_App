@@ -1,11 +1,12 @@
 package com.miguelsantos.todewit.datasource.repository
 
+import com.miguelsantos.todewit.datasource.database.TaskDao
 import com.miguelsantos.todewit.datasource.model.Task
-import com.miguelsantos.todewit.datasource.room.TaskDao
+import kotlinx.coroutines.flow.Flow
 
 class TaskRepository(private val taskDao: TaskDao) {
 
-    val list: List<Task> = taskDao.getAll()
+    val list: Flow<List<Task>> = taskDao.getAll()
 
     fun deleteTask(task: Task) {
         taskDao.deleteTask(task)
@@ -15,16 +16,16 @@ class TaskRepository(private val taskDao: TaskDao) {
         taskDao.insertTask(task)
     }
 
-    fun updateTask(task: Task) {
-        taskDao.updateTask(task)
-    }
-
     fun deleteCompletedTasks() {
         taskDao.deleteAllCompleted()
     }
 
-    fun findById(taskId: Int) {
-        taskDao.findById(taskId)
+    fun findById(taskId: Int): Task {
+        return taskDao.findById(taskId)
+    }
+
+    fun updateTAsk(task: Task) {
+        taskDao.updateTask(task)
     }
 
 }

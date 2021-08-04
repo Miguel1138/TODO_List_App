@@ -3,13 +3,16 @@ package com.miguelsantos.todewit.ui.fragments.home
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.miguelsantos.todewit.R
 import com.miguelsantos.todewit.databinding.FragmentHomeBinding
-import com.miguelsantos.todewit.datasource.TaskDataSource
+import com.miguelsantos.todewit.datasource.application.TaskApplication
 import com.miguelsantos.todewit.ui.TaskListAdapter
+import com.miguelsantos.todewit.ui.fragments.TaskViewModel
+import com.miguelsantos.todewit.ui.fragments.TaskViewModelFactory
 
 class HomeFragment : Fragment() {
 
@@ -17,6 +20,7 @@ class HomeFragment : Fragment() {
     private val adapter: TaskListAdapter by lazy {
         TaskListAdapter()
     }
+    private lateinit var viewModel: TaskViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,13 +28,17 @@ class HomeFragment : Fragment() {
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+        val viewModelFactory =
+            TaskViewModelFactory((requireActivity().application as TaskApplication).repository)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(TaskViewModel::class.java)
+        observers()
+
         // Recycler View
         binding.homeFragmentRecyclerTasks.layoutManager =
             GridLayoutManager(context, resources.getInteger(R.integer.grid_column_count))
         binding.homeFragmentRecyclerTasks.adapter = adapter
 
         setListeners()
-        updateList()
         setHasOptionsMenu(true)
 
         return binding.root
@@ -43,51 +51,43 @@ class HomeFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_select_all -> {
-                val list = TaskDataSource.getList()
-                // Uncheck all the checkboxes in case they are all already selected.
-                if (list.all { it.isDone == 1 }) {
-                    list.forEach { it.isDone = 0 }
-                } else {
-                    list.filter { it.isDone == 0 }
-                        .forEach { it.isDone = 1}
-                }
-                updateList()
+                viewModel.selectAll()
                 true
             }
             R.id.action_clear_finished_tasks -> {
-                TaskDataSource.getList().apply { removeAll(filter { it.isDone == 1}) }
-                updateList()
+                viewModel.deleteCompletedTasks()
                 true
             }
             else -> false
         }
     }
 
-    private fun updateList() {
-        val list = TaskDataSource.getList()
-        binding.emptyState.emptyStateConstraint.visibility =
-            if (list.isEmpty()) View.VISIBLE else View.GONE
-        adapter.notifyDataSetChanged()
-        adapter.submitList(list)
+    private fun observers() {
+        viewModel.taskList.observe(viewLifecycleOwner, { tasks ->
+            binding.emptyState.emptyStateConstraint.visibility =
+                if (tasks.isNullOrEmpty()) View.VISIBLE else View.GONE
+            adapter.notifyDataSetChanged()
+            adapter.submitList(tasks)
+        })
     }
 
     private fun setListeners() {
         // Fab
         binding.fabAddTask.setOnClickListener {
             it.findNavController().navigate(
-               HomeFragmentDirections.actionHomeFragmentToAddTaskFragment()
+                HomeFragmentDirections.actionHomeFragmentToAddTaskFragment()
             )
         }
 
         // item_task listeners
         adapter.listenerEdit = { task ->
             findNavController().navigate(
-                HomeFragmentDirections.actionHomeFragmentToAddTaskFragment().setTask(task))
+                HomeFragmentDirections.actionHomeFragmentToAddTaskFragment().setTask(task)
+            )
         }
 
         adapter.listenerDelete = { task ->
-            TaskDataSource.deleteTask(task)
-            updateList()
+            viewModel.deleteTask(task)
         }
     }
 

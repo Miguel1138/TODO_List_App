@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/addTaskFragment"
         android:name="com.miguelsantos.todewit.ui.fragments.add.AddTaskFragment"
-        android:label="@string/label_create_task"
+        android:label="@string/edit_task"
         tools:layout="@layout/fragment_add_task">
         <action
             android:id="@+id/action_addTaskFragment_to_homeFragment"

@@ -24,7 +24,7 @@ class TaskRepository(private val taskDao: TaskDao) {
         return taskDao.findById(taskId)
     }
 
-    fun updateTAsk(task: Task) {
+    fun updateTask(task: Task) {
         taskDao.updateTask(task)
     }
 

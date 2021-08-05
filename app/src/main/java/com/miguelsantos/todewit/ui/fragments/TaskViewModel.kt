@@ -30,22 +30,7 @@ class TaskViewModel(private val taskRepository: TaskRepository, var task: Task?)
     }
 
     internal fun updateTask(task: Task) = viewModelScope.launch(Dispatchers.IO) {
-        taskRepository.updateTAsk(task)
-    }
-
-    // TODO: 03/08/2021 select all não está funcionando, taskList.value está retornando null.
-    // Pesquisar sobre pegar dados mutaveis do banco de dados
-    internal fun selectAll() {
-        val list = taskList.value
-        // Uncheck all the checkboxes in case they are all already selected.
-        if (list != null) {
-            if (list.all { it.isDone == 1 }) {
-                list.forEach { it.isDone = 0 }
-            } else {
-                list.filter { it.isDone == 0 }
-                    .forEach { it.isDone = 1 }
-            }
-        }
+        taskRepository.updateTask(task)
     }
 
 }

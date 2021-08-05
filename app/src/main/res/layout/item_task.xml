@@ -6,20 +6,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    android:padding="8dp"
     app:cardElevation="2dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="8dp">
 
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/item_task_check_done"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@id/item_task_title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/item_task_title" />
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.10" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/item_task_title"
@@ -33,7 +32,7 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/item_image_more"
-            app:layout_constraintStart_toEndOf="@id/item_task_check_done"
+            app:layout_constraintStart_toEndOf="@id/start"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Passear com o cachorro" />
 
@@ -43,7 +42,7 @@
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/item_task_check_done"
+            app:layout_constraintBottom_toBottomOf="@id/divider"
             app:layout_constraintStart_toStartOf="@id/item_task_title"
             app:layout_constraintTop_toBottomOf="@id/item_task_title"
             tools:text="9h30" />
@@ -55,7 +54,7 @@
             android:layout_marginStart="16dp"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/item_task_check_done"
+            app:layout_constraintBottom_toBottomOf="@id/divider"
             app:layout_constraintStart_toEndOf="@id/item_task_hour"
             app:layout_constraintTop_toBottomOf="@id/item_task_title"
             tools:text="20/07/2021" />

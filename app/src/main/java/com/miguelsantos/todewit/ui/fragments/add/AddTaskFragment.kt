@@ -63,6 +63,7 @@ class AddTaskFragment : Fragment() {
             activity.supportActionBar?.title = getString(R.string.edit_task)
         } else {
             // Create Task button
+            activity.supportActionBar?.title = getString(R.string.label_create_task)
             binding.taskBtnCreateTask.setOnClickListener { addTask(it) }
         }
         setListeners()

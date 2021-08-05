@@ -1,4 +1,4 @@
-package com.miguelsantos.todewit.ui
+package com.miguelsantos.todewit.ui.fragments.home
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.miguelsantos.todewit.R
 import com.miguelsantos.todewit.databinding.ItemTaskBinding
 import com.miguelsantos.todewit.datasource.model.Task
-import com.miguelsantos.todewit.util.extensions.strike
 
 class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCallback()) {
 
@@ -41,14 +40,9 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCa
             binding.itemTaskHour.text = task.hour
             binding.itemTaskDate.text = task.date
             binding.itemImageMore.setOnClickListener { showPopUp(task) }
-            binding.itemTaskCheckDone.apply {
-                setOnClickListener { taskDone(task) }
-                // Remove the selected state of the next item after erasing an item above this.
-                isChecked = task.isDone == 1
-            }
 
             // Card view Configuration
-            // disable onClikclistener in landScape mode, at least for now.
+            // disable onClicklistener in landScape mode, at least for now.
             if (binding.root.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 binding.itemTaskDescription.visibility = View.VISIBLE
                 binding.itemTaskCardView.isClickable = false
@@ -65,12 +59,6 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCa
                     }
                 }
             }
-        }
-
-        // strike the title card text for done task
-        private fun taskDone(task: Task) {
-            binding.itemTaskTitle.strike = binding.itemTaskCheckDone.isChecked
-            task.isDone = if (binding.itemTaskCheckDone.isChecked) 1 else 0
         }
 
         // menu popUp

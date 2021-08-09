@@ -28,7 +28,6 @@
             app:argType=".datasource.model.Task"
             android:defaultValue="@null"
             app:nullable="true"/>
-
     </fragment>
 
 </navigation>

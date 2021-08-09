@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">To Dew it</string>
+    <string name="label_daily_task">Tâches du jour</string>
+    <string name="hint_title">Le Titre</string>
+    <string name="hint_description">La Description</string>
+    <string name="hint_time">L\'Heure</string>
+    <string name="hint_date">La Date</string>
+    <string name="label_cancel">Annuler</string>
+    <string name="label_create_task">Crèer Tâche</string>
+    <string name="action_edit">Éditer</string>
+    <string name="action_delete">Supprimer</string>
+    <string name="action_select_all">Tout Sélectionner</string>
+    <string name="action_clear_finished_tasks">Effacer les tâches terminées</string>
+    <string name="empty_state_label">Nous avons encore beaucoup à faire aujourd\'hui.</string>
+    <string name="content_fab_task">Bouton pour créer de nouvelles tâches</string>
+    <string name="edit_task">Éditer Tâche</string>
+</resources>

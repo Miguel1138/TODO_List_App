@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">To Dew it</string>
+    <string name="content_fab_task" translatable="false">Button to create new tasks</string>
+    <string name="hint_title">Title</string>
+    <string name="hint_description">Description</string>
+    <string name="hint_date">Date</string>
+    <string name="hint_time">Time</string>
+    <string name="label_cancel">Cancel</string>
+    <string name="label_create_task">Create Task</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_delete">Delete</string>
+    <string name="empty_state_label">We still have a lot to do today.</string>
+    <string name="action_select_all">Select All</string>
+    <string name="action_clear_finished_tasks">Clear Completed Tasks</string>
+    <string name="edit_task">Edit Task</string>
+    <string name="label_daily_task">Today\'s Tasks</string>
+</resources>

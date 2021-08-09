@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">To Dew it</string>
+    <string name="app_name" translatable="false">To Dew it</string>
     <string name="label_daily_task">Tarefas de Hoje</string>
-    <string name="content_fab_task">Botão para criar nova tarefa</string>
+    <string name="content_fab_task">Botão para criar novas tarefas</string>
     <string name="hint_title">Título</string>
     <string name="hint_description">Descrição</string>
     <string name="hint_date">Data</string>

@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Miguel_S_da_Silva/Documents/GitHub/Android_Studio_projetos/ToDewit/app/src/main/res/layout/activity_main.xml" value="0.17685185185185184" />
+        <entry key="..\:/Users/Miguel_S_da_Silva/Documents/GitHub/Android_Studio_projetos/ToDewit/app/src/main/res/layout/fragment_add_task.xml" value="0.22" />
+        <entry key="..\:/Users/Miguel_S_da_Silva/Documents/GitHub/Android_Studio_projetos/ToDewit/app/src/main/res/layout/fragment_empty_state.xml" value="0.22" />
+        <entry key="..\:/Users/Miguel_S_da_Silva/Documents/GitHub/Android_Studio_projetos/ToDewit/app/src/main/res/layout/fragment_home.xml" value="0.17685185185185184" />
+        <entry key="..\:/Users/Miguel_S_da_Silva/Documents/GitHub/Android_Studio_projetos/ToDewit/app/src/main/res/layout/item_task.xml" value="0.17685185185185184" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

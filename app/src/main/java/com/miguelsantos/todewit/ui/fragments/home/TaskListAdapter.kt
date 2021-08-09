@@ -22,10 +22,8 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCa
     var listenerEdit: (Task) -> Unit = {}
     var listenerDelete: (Task) -> Unit = {}
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
-        val binding = ItemTaskBinding.inflate(LayoutInflater.from(parent.context))
-        return TaskViewHolder(binding)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        TaskViewHolder(ItemTaskBinding.inflate(LayoutInflater.from(parent.context)))
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         holder.bind(getItem(position))
@@ -41,67 +39,73 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCa
             binding.itemTaskDate.text = task.date
             binding.itemImageMore.setOnClickListener { showPopUp(task) }
 
-            // Card view Configuration
-            // disable onClicklistener in landScape mode, at least for now.
-            if (binding.root.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                binding.itemTaskDescription.visibility = View.VISIBLE
-                binding.itemTaskCardView.isClickable = false
-                binding.itemTaskCardView.isFocusable = false
-            } else {
-                binding.itemTaskDescription.visibility = View.GONE
-                binding.itemTaskCardView.isClickable = true
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    binding.itemTaskCardView.isFocusable = true
-                }
-                binding.itemTaskCardView.setOnClickListener {
-                    with(binding.itemTaskDescription) {
-                        visibility = if (visibility == View.GONE) View.VISIBLE else View.GONE
-                    }
-                }
-            }
+            setCardViewByOrientation(binding.root.resources.configuration.orientation)
         }
 
         // menu popUp
         @SuppressLint("RestrictedApi")
         private fun showPopUp(task: Task) {
             val imgMore = binding.itemImageMore
-            val popupMenu = PopupMenu(imgMore.context, imgMore)
-            popupMenu.menuInflater.inflate(R.menu.menu_popup_more, popupMenu.menu)
+            PopupMenu(imgMore.context, imgMore)
+                .apply {
+                    menuInflater.inflate(R.menu.menu_popup_more, this.menu)
 
-            popupMenu.setOnMenuItemClickListener { menu ->
-                when (menu.itemId) {
-                    R.id.action_edit -> listenerEdit(task)
-                    R.id.action_delete -> listenerDelete(task)
-                }
-                return@setOnMenuItemClickListener true
-            }
+                    setOnMenuItemClickListener { menu ->
+                        when (menu.itemId) {
+                            R.id.action_edit -> listenerEdit(task)
+                            R.id.action_delete -> listenerDelete(task)
+                        }
+                        return@setOnMenuItemClickListener true
+                    }
 
-            // Show Menu Icons
-            if (popupMenu.menu is MenuBuilder) {
-                val menuBuilder = popupMenu.menu as MenuBuilder
-                menuBuilder.setOptionalIconsVisible(true)
-                for (item in menuBuilder.visibleItems) {
-                    val iconMarginPx = TypedValue.applyDimension(
-                        TypedValue.COMPLEX_UNIT_DIP,
-                        4.0f,
-                        binding.root.resources.displayMetrics
-                    ).toInt()
-                    if (item.icon != null) {
-                        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-                            item.icon =
-                                InsetDrawable(item.icon, iconMarginPx, 0, iconMarginPx, 0)
-                        } else {
-                            item.icon = object :
-                                InsetDrawable(item.icon, iconMarginPx, 0, iconMarginPx, 0) {
-                                override fun getIntrinsicWidth(): Int =
-                                    intrinsicHeight + iconMarginPx + iconMarginPx
+                    // Show Menu Icons
+                    if (this.menu is MenuBuilder) {
+                        val menuBuilder = this.menu as MenuBuilder
+                        menuBuilder.setOptionalIconsVisible(true)
+
+                        for (item in menuBuilder.visibleItems) {
+                            val iconMarginPx =
+                                TypedValue.applyDimension(
+                                    TypedValue.COMPLEX_UNIT_DIP,
+                                    4.0f,
+                                    binding.root.resources.displayMetrics
+                                ).toInt()
+                            if (item.icon != null && Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+                                item.icon =
+                                    InsetDrawable(item.icon, iconMarginPx, 0, iconMarginPx, 0)
+                            } else {
+                                item.icon =
+                                    object :
+                                        InsetDrawable(item.icon, iconMarginPx, 0, iconMarginPx, 0) {
+                                        override fun getIntrinsicWidth(): Int =
+                                            intrinsicHeight + iconMarginPx + iconMarginPx
+                                    }
                             }
                         }
                     }
                 }
-            }
+                .show()
+        }
 
-            popupMenu.show()
+        // Card view Configuration
+        // disable onClicklistener in landScape mode, at least for now.
+        private fun setCardViewByOrientation(orientation: Int) {
+            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                binding.itemTaskDescription.visibility = View.VISIBLE
+                binding.itemTaskCardView.isClickable = false
+                binding.itemTaskCardView.isFocusable = false
+            } else {
+                binding.itemTaskDescription.visibility = View.GONE
+                binding.itemTaskCardView.isClickable = true
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                    binding.itemTaskCardView.isFocusable = true
+
+                binding.itemTaskCardView.setOnClickListener {
+                    with(binding.itemTaskDescription) {
+                        visibility = if (visibility == View.GONE) View.VISIBLE else View.GONE
+                    }
+                }
+            }
         }
 
     }

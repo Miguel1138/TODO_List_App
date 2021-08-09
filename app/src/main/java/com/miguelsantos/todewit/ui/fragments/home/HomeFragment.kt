@@ -18,10 +18,8 @@ import com.miguelsantos.todewit.ui.fragments.TaskViewModelFactory
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-    private val adapter: TaskListAdapter by lazy {
-        TaskListAdapter()
-    }
     private lateinit var viewModel: TaskViewModel
+    private val adapter by lazy { TaskListAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,19 +31,21 @@ class HomeFragment : Fragment() {
             TaskViewModelFactory((requireActivity().application as TaskApplication).repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(TaskViewModel::class.java)
 
-        setObservers()
-
         // Recycler View
         binding.homeFragmentRecyclerTasks.layoutManager =
             GridLayoutManager(context, resources.getInteger(R.integer.grid_column_count))
         binding.homeFragmentRecyclerTasks.adapter = adapter
 
+        setObservers()
         setListeners()
         setHasOptionsMenu(true)
 
         return binding.root
     }
 
+    /**
+     * Change the layout if the list is not empty
+     */
     private fun setObservers() {
         viewModel.taskList.observe(viewLifecycleOwner, { tasks ->
             adapter.notifyDataSetChanged()

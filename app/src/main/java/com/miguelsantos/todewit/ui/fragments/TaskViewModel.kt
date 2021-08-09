@@ -9,7 +9,7 @@ import com.miguelsantos.todewit.datasource.repository.TaskRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class TaskViewModel(private val taskRepository: TaskRepository, var task: Task?) : ViewModel() {
+class TaskViewModel(private val taskRepository: TaskRepository, val task: Task?) : ViewModel() {
 
     val taskList: LiveData<List<Task>> = taskRepository.list.asLiveData()
 

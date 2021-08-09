@@ -1,14 +1,16 @@
 package com.miguelsantos.todewit.util.extensions
 
 import android.graphics.Paint
+import android.text.format.DateFormat
 import android.widget.TextView
 import com.google.android.material.textfield.TextInputLayout
 import java.text.SimpleDateFormat
 import java.util.*
 
-private val locale = Locale("pt", "BR")
+private val locale = Locale.getDefault()
+private val pattern = DateFormat.getBestDateTimePattern(locale, "ddMMyyyy")
 
-fun Date.format(): String = SimpleDateFormat("dd/MM/yyyy", locale).format(this)
+fun Date.format(): String = SimpleDateFormat(pattern, locale).format(this)
 
 var TextInputLayout.text: String
     get() = editText?.text?.toString() ?: ""

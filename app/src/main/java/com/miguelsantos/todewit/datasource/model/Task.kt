@@ -46,9 +46,7 @@ data class Task(
         return true
     }
 
-    override fun hashCode(): Int {
-        return id
-    }
+    override fun hashCode(): Int = id
 
     companion object CREATOR : Parcelable.Creator<Task> {
 

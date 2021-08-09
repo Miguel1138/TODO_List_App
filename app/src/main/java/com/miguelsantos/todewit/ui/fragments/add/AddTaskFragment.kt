@@ -30,12 +30,10 @@ class AddTaskFragment : Fragment() {
         private const val TIME_PICKER_TAG: String = "time_picker_tag"
     }
 
-    private val activity by lazy {
-        requireActivity() as AppCompatActivity
-    }
     private lateinit var binding: FragmentAddTaskBinding
     private lateinit var viewModel: TaskViewModel
     private lateinit var viewModelFactory: TaskViewModelFactory
+    private val activity by lazy { requireActivity() as AppCompatActivity }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,30 +43,33 @@ class AddTaskFragment : Fragment() {
 
         val repository = (activity.application as TaskApplication).repository
         val editTask = AddTaskFragmentArgs.fromBundle(requireArguments()).task
-
         viewModelFactory = TaskViewModelFactory(repository, editTask)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(TaskViewModel::class.java)
 
+        checkLayout(editTask)
+        setListeners()
+
+        return binding.root
+    }
+
+    private fun checkLayout(editTask: Task?) {
         if (editTask != null) {
-            viewModel.findById().let { task ->
+            viewModel.findById().let {
                 binding.taskInputLayoutTitle.text = viewModel.task?.title ?: ""
                 binding.taskInputLayoutDescription.text = viewModel.task?.description ?: ""
                 binding.taskInputLayoutTime.text = viewModel.task?.hour ?: ""
                 binding.taskInputLayoutDate.text = viewModel.task?.date ?: ""
             }
             // Edit Task Layout
+            activity.supportActionBar?.title = getString(R.string.edit_task)
             binding.taskBtnCreateTask.text = getString(R.string.edit_task)
             binding.taskBtnCreateTask.setOnClickListener { updateTask(it) }
-            activity.supportActionBar?.title = getString(R.string.edit_task)
         } else {
             // Create Task button
             activity.supportActionBar?.title = getString(R.string.label_create_task)
             binding.taskBtnCreateTask.setOnClickListener { addTask(it) }
         }
-        setListeners()
-
-        return binding.root
     }
 
     /**
@@ -102,37 +103,37 @@ class AddTaskFragment : Fragment() {
 
         // Cancel Button
         binding.taskBtnCancel.setOnClickListener {
-            it.findNavController().navigate(
-                AddTaskFragmentDirections.actionAddTaskFragmentToHomeFragment()
-            )
+            returnHomeScreen(it)
         }
     }
 
     private fun addTask(view: View) {
         val task = createTaskObject()
         viewModel.insertTask(task)
-        view.findNavController().navigate(
-            AddTaskFragmentDirections.actionAddTaskFragmentToHomeFragment()
-        )
+        returnHomeScreen(view)
     }
 
     private fun updateTask(view: View) {
         val task = createTaskObject()
         viewModel.updateTask(task)
-        view.findNavController().navigate(
-            AddTaskFragmentDirections.actionAddTaskFragmentToHomeFragment()
-        )
+        returnHomeScreen(view)
     }
 
     /**
      * O Id vai mudar caso seja um objeto já criado ou um novo objeto
      */
-    private fun createTaskObject(): Task = Task(
+    private fun createTaskObject() = Task(
         title = binding.taskInputLayoutTitle.text,
         description = binding.taskInputLayoutDescription.text,
         date = binding.taskInputLayoutDate.text,
         hour = binding.taskInputLayoutTime.text,
         id = viewModel.task?.id ?: 0
     )
+
+    private fun returnHomeScreen(view: View) {
+        view.findNavController().navigate(
+            AddTaskFragmentDirections.actionAddTaskFragmentToHomeFragment()
+        )
+    }
 
 }

@@ -104,7 +104,6 @@
             android:id="@+id/task_btn_create_task"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/red"
             android:text="@string/label_create_task"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"

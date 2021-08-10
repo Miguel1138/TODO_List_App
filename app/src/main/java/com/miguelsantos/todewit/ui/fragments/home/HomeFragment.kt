@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.miguelsantos.todewit.R
 import com.miguelsantos.todewit.databinding.FragmentHomeBinding
 import com.miguelsantos.todewit.datasource.application.TaskApplication
@@ -48,7 +49,6 @@ class HomeFragment : Fragment() {
      */
     private fun setObservers() {
         viewModel.taskList.observe(viewLifecycleOwner, { tasks ->
-            adapter.notifyDataSetChanged()
             adapter.submitList(tasks)
             if (tasks.isNotEmpty()) {
                 binding.emptyState.emptyStateConstraint.visibility = View.GONE
@@ -76,7 +76,12 @@ class HomeFragment : Fragment() {
         }
 
         adapter.listenerDelete = { task ->
-            viewModel.deleteTask(task)
+            MaterialAlertDialogBuilder(requireContext()).apply {
+                setTitle(R.string.dialog_title)
+                setMessage(R.string.dialog_text)
+                setPositiveButton(R.string.action_delete) { _, _ -> viewModel.deleteTask(task) }
+                setNegativeButton(R.string.label_cancel) { _, _ -> }
+            }.show()
         }
     }
 

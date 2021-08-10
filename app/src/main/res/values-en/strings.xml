@@ -15,4 +15,6 @@
     <string name="action_clear_finished_tasks">Clear Completed Tasks</string>
     <string name="edit_task">Edit Task</string>
     <string name="label_daily_task">Today\'s Tasks</string>
+    <string name="dialog_text"> Once this item it\'s exclude you can no longer retrieve it!</string>
+    <string name="dialog_title">Are you sure ?</string>
 </resources>

@@ -1,10 +1,10 @@
-package com.miguelsantos.todewit.datasource.database
+package com.miguelsantos.todewit.data.localdatasource
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.miguelsantos.todewit.datasource.model.Task
+import com.miguelsantos.todewit.model.Task
 import com.miguelsantos.todewit.util.constants.Constants.taskDbConfig.DATABASE_NAME
 import com.miguelsantos.todewit.util.constants.Constants.taskDbConfig.DATABASE_VERSION
 

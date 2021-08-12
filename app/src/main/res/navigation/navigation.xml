@@ -25,7 +25,7 @@
             app:destination="@id/homeFragment" />
         <argument
             android:name="task"
-            app:argType=".datasource.model.Task"
+            app:argType=".model.Task"
             android:defaultValue="@null"
             app:nullable="true"/>
     </fragment>

@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.miguelsantos.todewit.R
 import com.miguelsantos.todewit.databinding.ItemTaskBinding
-import com.miguelsantos.todewit.datasource.model.Task
+import com.miguelsantos.todewit.model.Task
 
 class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCallback()) {
 

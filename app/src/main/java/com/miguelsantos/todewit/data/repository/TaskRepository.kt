@@ -1,7 +1,7 @@
-package com.miguelsantos.todewit.datasource.repository
+package com.miguelsantos.todewit.data.repository
 
-import com.miguelsantos.todewit.datasource.database.TaskDao
-import com.miguelsantos.todewit.datasource.model.Task
+import com.miguelsantos.todewit.data.localdatasource.TaskDao
+import com.miguelsantos.todewit.model.Task
 import kotlinx.coroutines.flow.Flow
 
 class TaskRepository(private val taskDao: TaskDao) {

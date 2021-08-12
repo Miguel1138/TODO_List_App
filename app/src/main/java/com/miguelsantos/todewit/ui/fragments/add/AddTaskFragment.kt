@@ -12,11 +12,11 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.miguelsantos.todewit.R
+import com.miguelsantos.todewit.data.application.TaskApplication
 import com.miguelsantos.todewit.databinding.FragmentAddTaskBinding
-import com.miguelsantos.todewit.datasource.application.TaskApplication
-import com.miguelsantos.todewit.datasource.model.Task
-import com.miguelsantos.todewit.ui.fragments.TaskViewModel
-import com.miguelsantos.todewit.ui.fragments.TaskViewModelFactory
+import com.miguelsantos.todewit.model.Task
+import com.miguelsantos.todewit.ui.fragments.viewmodel.TaskViewModel
+import com.miguelsantos.todewit.ui.fragments.viewmodel.TaskViewModelFactory
 import com.miguelsantos.todewit.util.extensions.format
 import com.miguelsantos.todewit.util.extensions.formatTime
 import com.miguelsantos.todewit.util.extensions.text

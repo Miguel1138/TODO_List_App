@@ -1,11 +1,11 @@
-package com.miguelsantos.todewit.ui.fragments
+package com.miguelsantos.todewit.ui.fragments.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.miguelsantos.todewit.datasource.model.Task
-import com.miguelsantos.todewit.datasource.repository.TaskRepository
+import com.miguelsantos.todewit.data.repository.TaskRepository
+import com.miguelsantos.todewit.model.Task
 import kotlinx.coroutines.launch
 
 class TaskViewModel(

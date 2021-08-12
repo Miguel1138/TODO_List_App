@@ -1,4 +1,4 @@
-package com.miguelsantos.todewit.datasource.model
+package com.miguelsantos.todewit.model
 
 import android.os.Parcel
 import android.os.Parcelable

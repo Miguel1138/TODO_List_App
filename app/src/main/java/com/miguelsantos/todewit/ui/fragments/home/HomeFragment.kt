@@ -11,10 +11,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.miguelsantos.todewit.R
+import com.miguelsantos.todewit.data.application.TaskApplication
 import com.miguelsantos.todewit.databinding.FragmentHomeBinding
-import com.miguelsantos.todewit.datasource.application.TaskApplication
-import com.miguelsantos.todewit.ui.fragments.TaskViewModel
-import com.miguelsantos.todewit.ui.fragments.TaskViewModelFactory
+import com.miguelsantos.todewit.ui.fragments.viewmodel.TaskViewModel
+import com.miguelsantos.todewit.ui.fragments.viewmodel.TaskViewModelFactory
 
 class HomeFragment : Fragment() {
 

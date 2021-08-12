@@ -1,9 +1,9 @@
-package com.miguelsantos.todewit.ui.fragments
+package com.miguelsantos.todewit.ui.fragments.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.miguelsantos.todewit.datasource.model.Task
-import com.miguelsantos.todewit.datasource.repository.TaskRepository
+import com.miguelsantos.todewit.data.repository.TaskRepository
+import com.miguelsantos.todewit.model.Task
 
 class TaskViewModelFactory(
     private val repository: TaskRepository,

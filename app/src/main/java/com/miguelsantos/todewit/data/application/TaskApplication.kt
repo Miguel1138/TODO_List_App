@@ -1,8 +1,8 @@
-package com.miguelsantos.todewit.datasource.application
+package com.miguelsantos.todewit.data.application
 
 import android.app.Application
-import com.miguelsantos.todewit.datasource.database.AppDatabase
-import com.miguelsantos.todewit.datasource.repository.TaskRepository
+import com.miguelsantos.todewit.data.localdatasource.AppDatabase
+import com.miguelsantos.todewit.data.repository.TaskRepository
 
 class TaskApplication : Application() {
 

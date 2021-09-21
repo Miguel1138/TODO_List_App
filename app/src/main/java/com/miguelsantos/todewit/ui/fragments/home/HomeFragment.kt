@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -22,52 +21,50 @@ class HomeFragment : Fragment() {
     private lateinit var viewModel: TaskViewModel
     private val adapter by lazy { TaskListAdapter() }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
 
         val viewModelFactory =
             TaskViewModelFactory((requireActivity().application as TaskApplication).repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(TaskViewModel::class.java)
+    }
 
-        // Recycler View
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            taskViewModel = viewModel
+            homeFragment = this@HomeFragment
+        }
+
+        //TODO Usar o observer diretamente pelo layout.
+        viewModel.taskList.observe(viewLifecycleOwner, { tasks ->
+            adapter.submitList(tasks)
+        })
+
         binding.homeFragmentRecyclerTasks.layoutManager =
             GridLayoutManager(context, resources.getInteger(R.integer.grid_column_count))
         binding.homeFragmentRecyclerTasks.adapter = adapter
 
-        setObservers()
         setListeners()
-        setHasOptionsMenu(true)
-
-        return binding.root
     }
 
-    /**
-     * Change the layout if the list is not empty
-     */
-    private fun setObservers() {
-        viewModel.taskList.observe(viewLifecycleOwner, { tasks ->
-            adapter.submitList(tasks)
-            if (tasks.isNotEmpty()) {
-                binding.emptyState.emptyStateConstraint.visibility = View.GONE
-                binding.homeFragmentRecyclerTasks.visibility = View.VISIBLE
-            } else if (tasks.isNullOrEmpty()) {
-                binding.emptyState.emptyStateConstraint.visibility = View.VISIBLE
-            }
-        })
+    fun fabClickListener() {
+        findNavController().navigate(
+            HomeFragmentDirections.actionHomeFragmentToAddTaskFragment()
+        )
     }
-
 
     private fun setListeners() {
-        // Fab
-        binding.fabAddTask.setOnClickListener {
-            it.findNavController().navigate(
-                HomeFragmentDirections.actionHomeFragmentToAddTaskFragment()
-            )
-        }
-
         // item_task listeners
         adapter.listenerEdit = { task ->
             findNavController().navigate(
@@ -80,7 +77,7 @@ class HomeFragment : Fragment() {
                 setTitle(R.string.dialog_title)
                 setMessage(R.string.dialog_text)
                 setPositiveButton(R.string.action_delete) { _, _ -> viewModel.deleteTask(task) }
-                setNegativeButton(R.string.label_cancel) { _, _ -> }
+                setNegativeButton(R.string.label_cancel) { dialog, _ -> dialog.cancel() }
             }.show()
         }
     }

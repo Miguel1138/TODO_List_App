@@ -29,7 +29,7 @@
 - [Android Jetpack](https://developer.android.com/jetpack/getting-started)
     - [Room](https://developer.android.com/training/data-storage/room)
     - [View Model Components](https://developer.android.com/topic/libraries/architecture/viewmodel)
-    - [View Binding](https://developer.android.com/topic/libraries/view-binding/)
+    - [Data Binding](https://developer.android.com/topic/libraries/data-binding#using_the_data_binding_library)
     - [Navigation](https://developer.android.com/guide/navigation)
       
 <a name="features"> <h2> ⚙️ Features </h2> </a>

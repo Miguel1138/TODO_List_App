@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -30,93 +30,81 @@ class AddTaskFragment : Fragment() {
         private const val TIME_PICKER_TAG: String = "time_picker_tag"
     }
 
+    private var editTask: Task? = null
     private lateinit var binding: FragmentAddTaskBinding
     private lateinit var viewModel: TaskViewModel
     private lateinit var viewModelFactory: TaskViewModelFactory
     private val activity by lazy { requireActivity() as AppCompatActivity }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentAddTaskBinding.inflate(inflater, container, false)
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         val repository = (activity.application as TaskApplication).repository
-        val editTask = AddTaskFragmentArgs.fromBundle(requireArguments()).task
+        editTask = AddTaskFragmentArgs.fromBundle(requireArguments()).task
         viewModelFactory = TaskViewModelFactory(repository, editTask)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(TaskViewModel::class.java)
+    }
 
-        checkLayout(editTask)
-        setListeners()
-
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentAddTaskBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    private fun checkLayout(editTask: Task?) {
-        if (editTask != null) {
-            viewModel.findById().let {
-                binding.taskInputLayoutTitle.text = viewModel.task?.title ?: ""
-                binding.taskInputLayoutDescription.text = viewModel.task?.description ?: ""
-                binding.taskInputLayoutTime.text = viewModel.task?.hour ?: ""
-                binding.taskInputLayoutDate.text = viewModel.task?.date ?: ""
-            }
-            // Edit Task Layout
-            activity.supportActionBar?.title = getString(R.string.edit_task)
-            binding.taskBtnCreateTask.text = getString(R.string.edit_task)
-            binding.taskBtnCreateTask.setOnClickListener { updateTask(it) }
-        } else {
-            // Create Task button
-            activity.supportActionBar?.title = getString(R.string.label_create_task)
-            binding.taskBtnCreateTask.setOnClickListener { addTask(it) }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.apply {
+            taskViewModel = viewModel
+            lifecycleOwner = viewLifecycleOwner
+            taskFragment = this@AddTaskFragment
         }
+
+        activity.supportActionBar?.title =
+            if (viewModel.isLayoutEmpty()) getString(R.string.label_create_task) else getString(R.string.label_edit_task)
     }
 
-    /**
-     * Click Listeners
-     */
-    private fun setListeners() {
-        // Date
-        binding.taskInputLayoutDate.editText?.setOnClickListener {
-            val datePicker = MaterialDatePicker.Builder.datePicker().build()
-            datePicker.addOnPositiveButtonClickListener {
-                val timeZone = TimeZone.getDefault()
-                val offset = timeZone.getOffset(Date().time) * -1
-                binding.taskInputLayoutDate.text = Date(it + offset).format()
-            }
-            datePicker.show(parentFragmentManager, DATE_PICKER_TAG)
-        }
+    fun timePickerListener() {
+        val timePicker = MaterialTimePicker.Builder()
+            .setTimeFormat(TimeFormat.CLOCK_24H)
+            .build()
+        timePicker.addOnPositiveButtonClickListener {
+            val hour = formatTime(timePicker.hour)
+            val minute = formatTime(timePicker.minute)
 
-        // Time Picker
-        binding.taskInputLayoutTime.editText?.setOnClickListener {
-            val timePicker = MaterialTimePicker.Builder()
-                .setTimeFormat(TimeFormat.CLOCK_24H)
-                .build()
-            timePicker.addOnPositiveButtonClickListener {
-                val hour = formatTime(timePicker.hour)
-                val minute = formatTime(timePicker.minute)
-
-                binding.taskInputLayoutTime.text = "$hour:$minute"
-            }
-            timePicker.show(parentFragmentManager, TIME_PICKER_TAG)
+            binding.taskInputLayoutTime.text = "$hour:$minute"
         }
-
-        // Cancel Button
-        binding.taskBtnCancel.setOnClickListener {
-            returnHomeScreen(it)
-        }
+        timePicker.show(parentFragmentManager, TIME_PICKER_TAG)
     }
 
-    private fun addTask(view: View) {
+    // valores estão vindo nulos ao clicar no widget.
+    fun datePickerListener() {
+        val datePicker = MaterialDatePicker.Builder.datePicker().build()
+        datePicker.addOnPositiveButtonClickListener {
+            val timeZone = TimeZone.getDefault()
+            val offset = timeZone.getOffset(Date().time) * -1
+            binding.taskInputLayoutDate.text = Date(it + offset).format()
+        }
+        datePicker.show(parentFragmentManager, DATE_PICKER_TAG)
+    }
+
+    fun addTask() {
         val task = createTaskObject()
         viewModel.insertTask(task)
-        returnHomeScreen(view)
+        returnHomeScreen()
     }
 
-    private fun updateTask(view: View) {
+    fun updateTask() {
         val task = createTaskObject()
         viewModel.updateTask(task)
-        returnHomeScreen(view)
+        returnHomeScreen()
+    }
+
+    fun returnHomeScreen() {
+        findNavController().navigate(
+            AddTaskFragmentDirections.actionAddTaskFragmentToHomeFragment()
+        )
     }
 
     /**
@@ -129,11 +117,5 @@ class AddTaskFragment : Fragment() {
         hour = binding.taskInputLayoutTime.text,
         id = viewModel.task?.id ?: 0
     )
-
-    private fun returnHomeScreen(view: View) {
-        view.findNavController().navigate(
-            AddTaskFragmentDirections.actionAddTaskFragmentToHomeFragment()
-        )
-    }
 
 }

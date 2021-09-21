@@ -13,7 +13,8 @@
     <string name="empty_state_label">Ainda temos muito o que fazer hoje. </string>
     <string name="action_select_all">Selecionar todas</string>
     <string name="action_clear_finished_tasks">Apagar tarefas concluídas</string>
-    <string name="edit_task">Editar Tarefa</string>
+    <string name="label_edit_task">Editar Tarefa</string>
     <string name="dialog_text">Uma vez excluído não será possível recuperar este item!</string>
     <string name="dialog_title">Tem certeza disto ?</string>
+    <string name="empty_string" translatable="false" />
 </resources>

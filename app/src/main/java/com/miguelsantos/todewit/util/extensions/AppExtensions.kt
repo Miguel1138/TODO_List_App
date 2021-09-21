@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 private val locale = Locale.getDefault()
-private val pattern = DateFormat.getBestDateTimePattern(locale, "ddMMyyyy")
+private val pattern = DateFormat.getBestDateTimePattern(locale, "dd/MM/yyyy")
 
 fun Date.format(): String = SimpleDateFormat(pattern, locale).format(this)
 

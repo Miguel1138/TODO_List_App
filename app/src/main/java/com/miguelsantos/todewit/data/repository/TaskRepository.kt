@@ -16,14 +16,6 @@ class TaskRepository(private val taskDao: TaskDao) {
         taskDao.insertTask(task)
     }
 
-    suspend fun deleteCompletedTasks() {
-        taskDao.deleteAllCompleted()
-    }
-
-    suspend fun findById(taskId: Int): Task {
-        return taskDao.findById(taskId)
-    }
-
     suspend fun updateTask(task: Task) {
         taskDao.updateTask(task)
     }

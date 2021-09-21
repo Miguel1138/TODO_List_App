@@ -1,58 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
     tools:context=".ui.fragments.home.HomeFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="taskViewModel"
+            type="com.miguelsantos.todewit.ui.fragments.viewmodel.TaskViewModel" />
+
+        <variable
+            name="homeFragment"
+            type="com.miguelsantos.todewit.ui.fragments.home.HomeFragment" />
+    </data>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-        <include
-            android:id="@+id/emptyState"
-            layout="@layout/fragment_empty_state" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_vertical_begin"
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.03" />
+            <include
+                android:id="@+id/emptyState"
+                layout="@layout/fragment_empty_state"
+                android:visibility="@{taskViewModel.taskList.empty ? View.VISIBLE : View.GONE}" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_vertical_end"
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.97" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_vertical_begin"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.03" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/home_fragment_recycler_tasks"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@id/fab_add_task"
-            app:layout_constraintEnd_toEndOf="@id/guideline_vertical_end"
-            app:layout_constraintStart_toStartOf="@id/guideline_vertical_begin"
-            app:layout_constraintTop_toTopOf="parent"
-            android:visibility="gone"
-            tools:itemCount="8"
-            tools:listitem="@layout/item_task" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_vertical_end"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.97" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_add_task"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/big_margin"
-            android:contentDescription="@string/content_fab_task"
-            android:elevation="4dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_baseline_add_24" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/home_fragment_recycler_tasks"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="@{taskViewModel.taskList.empty ? View.GONE : View.VISIBLE}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toTopOf="@id/fab_add_task"
+                app:layout_constraintEnd_toEndOf="@id/guideline_vertical_end"
+                app:layout_constraintStart_toStartOf="@id/guideline_vertical_begin"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:itemCount="8"
+                tools:listitem="@layout/item_task" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_add_task"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/big_margin"
+                android:contentDescription="@string/content_fab_task"
+                android:elevation="4dp"
+                android:onClick="@{() -> homeFragment.fabClickListener()}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/ic_baseline_add_24" />
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

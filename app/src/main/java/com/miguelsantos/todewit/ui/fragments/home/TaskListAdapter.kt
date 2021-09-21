@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.PopupMenu
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -22,8 +23,14 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCa
     var listenerEdit: (Task) -> Unit = {}
     var listenerDelete: (Task) -> Unit = {}
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        TaskViewHolder(ItemTaskBinding.inflate(LayoutInflater.from(parent.context)))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = TaskViewHolder(
+        DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            R.layout.item_task,
+            parent,
+            false
+        )
+    )
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         holder.bind(getItem(position))
@@ -33,12 +40,12 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCa
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(task: Task) {
+            //TODO fazer binding diretamente pelo layout com o databinding.
             binding.itemTaskTitle.text = task.title
             binding.itemTaskDescription.text = task.description
             binding.itemTaskHour.text = task.hour
             binding.itemTaskDate.text = task.date
             binding.itemImageMore.setOnClickListener { showPopUp(task) }
-
             setCardViewByOrientation(binding.root.resources.configuration.orientation)
         }
 
@@ -46,45 +53,40 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCa
         @SuppressLint("RestrictedApi")
         private fun showPopUp(task: Task) {
             val imgMore = binding.itemImageMore
-            PopupMenu(imgMore.context, imgMore)
-                .apply {
-                    menuInflater.inflate(R.menu.menu_popup_more, this.menu)
-
-                    setOnMenuItemClickListener { menu ->
-                        when (menu.itemId) {
-                            R.id.action_edit -> listenerEdit(task)
-                            R.id.action_delete -> listenerDelete(task)
-                        }
-                        return@setOnMenuItemClickListener true
+            PopupMenu(imgMore.context, imgMore).apply {
+                menuInflater.inflate(R.menu.menu_popup_more, this.menu)
+                setOnMenuItemClickListener { menu ->
+                    when (menu.itemId) {
+                        R.id.action_edit -> listenerEdit(task)
+                        R.id.action_delete -> listenerDelete(task)
                     }
+                    return@setOnMenuItemClickListener true
+                }
 
-                    // Show Menu Icons
-                    if (this.menu is MenuBuilder) {
-                        val menuBuilder = this.menu as MenuBuilder
-                        menuBuilder.setOptionalIconsVisible(true)
+                // Show Menu Icons
+                if (this.menu is MenuBuilder) {
+                    val menuBuilder = this.menu as MenuBuilder
+                    menuBuilder.setOptionalIconsVisible(true)
 
-                        for (item in menuBuilder.visibleItems) {
-                            val iconMarginPx =
-                                TypedValue.applyDimension(
-                                    TypedValue.COMPLEX_UNIT_DIP,
-                                    4.0f,
-                                    binding.root.resources.displayMetrics
-                                ).toInt()
-                            if (item.icon != null && Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-                                item.icon =
-                                    InsetDrawable(item.icon, iconMarginPx, 0, iconMarginPx, 0)
-                            } else {
-                                item.icon =
-                                    object :
-                                        InsetDrawable(item.icon, iconMarginPx, 0, iconMarginPx, 0) {
-                                        override fun getIntrinsicWidth(): Int =
-                                            intrinsicHeight + iconMarginPx + iconMarginPx
-                                    }
+                    for (item in menuBuilder.visibleItems) {
+                        val iconMarginPx =
+                            TypedValue.applyDimension(
+                                TypedValue.COMPLEX_UNIT_DIP,
+                                4.0f,
+                                binding.root.resources.displayMetrics
+                            ).toInt()
+                        if (item.icon != null && Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+                            item.icon = InsetDrawable(item.icon, iconMarginPx, 0, iconMarginPx, 0)
+                        } else {
+                            item.icon = object :
+                                InsetDrawable(item.icon, iconMarginPx, 0, iconMarginPx, 0) {
+                                override fun getIntrinsicWidth(): Int =
+                                    intrinsicHeight + iconMarginPx + iconMarginPx
                             }
                         }
                     }
                 }
-                .show()
+            }.show()
         }
 
         // Card view Configuration
@@ -92,17 +94,28 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCa
         private fun setCardViewByOrientation(orientation: Int) {
             if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 binding.itemTaskDescription.visibility = View.VISIBLE
-                binding.itemTaskCardView.isClickable = false
-                binding.itemTaskCardView.isFocusable = false
+                binding.itemImageShowDesc.apply {
+                    visibility = View.GONE
+                    isClickable = false
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) isFocusable = false
+                }
             } else {
-                binding.itemTaskDescription.visibility = View.GONE
-                binding.itemTaskCardView.isClickable = true
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                    binding.itemTaskCardView.isFocusable = true
-
-                binding.itemTaskCardView.setOnClickListener {
-                    with(binding.itemTaskDescription) {
-                        visibility = if (visibility == View.GONE) View.VISIBLE else View.GONE
+                binding.itemImageShowDesc.apply {
+                    visibility = View.VISIBLE
+                    isClickable = true
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) isFocusable = true
+                    setOnClickListener {
+                        when (binding.itemTaskDescription.visibility) {
+                            View.GONE -> {
+                                binding.itemTaskDescription.visibility = View.VISIBLE
+                                // Change icon image for the imageView.
+                                this.setImageResource(R.drawable.ic_baseline_keyboard_arrow_up_24)
+                            }
+                            View.VISIBLE -> {
+                                binding.itemTaskDescription.visibility = View.GONE
+                                this.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24)
+                            }
+                        }
                     }
                 }
             }

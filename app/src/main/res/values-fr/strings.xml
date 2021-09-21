@@ -14,7 +14,7 @@
     <string name="action_clear_finished_tasks">Effacer les tâches terminées</string>
     <string name="empty_state_label">Nous avons encore beaucoup à faire aujourd\'hui.</string>
     <string name="content_fab_task">Bouton pour créer de nouvelles tâches</string>
-    <string name="edit_task">Éditer Tâche</string>
+    <string name="label_edit_task">Éditer Tâche</string>
     <string name="dialog_text">Une fois supprimé, il ne sera plus possible de récupérer cet élément !</string>
     <string name="dialog_title">Êtes-vous sûr de cela ?</string>
 </resources>

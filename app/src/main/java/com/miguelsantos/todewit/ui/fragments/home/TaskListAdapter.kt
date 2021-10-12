@@ -17,8 +17,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.miguelsantos.todewit.R
 import com.miguelsantos.todewit.databinding.ItemTaskBinding
 import com.miguelsantos.todewit.model.Task
+import com.miguelsantos.todewit.ui.fragments.viewmodel.TaskViewModel
 
-class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCallback()) {
+class TaskListAdapter(private val viewModel: TaskViewModel) :
+    ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCallback()) {
 
     var listenerEdit: (Task) -> Unit = {}
     var listenerDelete: (Task) -> Unit = {}
@@ -33,19 +35,21 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCa
     )
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(viewModel, viewModel.taskList.value!![position])
     }
 
     inner class TaskViewHolder(private val binding: ItemTaskBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(task: Task) {
-            //TODO fazer binding diretamente pelo layout com o databinding.
-            binding.itemTaskTitle.text = task.title
-            binding.itemTaskDescription.text = task.description
-            binding.itemTaskHour.text = task.hour
-            binding.itemTaskDate.text = task.date
-            binding.itemImageMore.setOnClickListener { showPopUp(task) }
+        fun bind(viewModel: TaskViewModel, item: Task) {
+            binding.apply {
+                taskViewModel = viewModel
+                task = item
+                executePendingBindings()
+            }
+
+            // TODO Verificar possiveis implementações diretamente pelo layout.
+            binding.itemImageMore.setOnClickListener { showPopUp(item) }
             setCardViewByOrientation(binding.root.resources.configuration.orientation)
         }
 
@@ -106,7 +110,7 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCa
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) isFocusable = true
                     setOnClickListener {
                         when (binding.itemTaskDescription.visibility) {
-                            View.GONE -> {
+                            View.GONE, View.INVISIBLE-> {
                                 binding.itemTaskDescription.visibility = View.VISIBLE
                                 // Change icon image for the imageView.
                                 this.setImageResource(R.drawable.ic_baseline_keyboard_arrow_up_24)

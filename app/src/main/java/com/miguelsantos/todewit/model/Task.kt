@@ -11,7 +11,7 @@ data class Task(
     val description: String,
     val hour: String,
     val date: String,
-    var isDone: Int = 0,
+    var isDone: Boolean = false,
     @PrimaryKey(autoGenerate = true) val id: Int = 1
 ) : Parcelable {
 
@@ -20,7 +20,7 @@ data class Task(
         parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString(),
-        parcel.readInt(),
+        parcel.readInt() == 1,
         parcel.readInt()
     )
 
@@ -32,7 +32,7 @@ data class Task(
         dest?.writeString(description)
         dest?.writeString(hour)
         dest?.writeString(date)
-        dest?.writeInt(isDone)
+        dest?.writeInt(if (isDone) 1 else 0)
     }
 
     override fun equals(other: Any?): Boolean {

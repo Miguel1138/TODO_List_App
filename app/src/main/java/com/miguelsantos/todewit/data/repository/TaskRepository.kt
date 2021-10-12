@@ -20,4 +20,16 @@ class TaskRepository(private val taskDao: TaskDao) {
         taskDao.updateTask(task)
     }
 
+    suspend fun clearCompletedTasks() {
+        taskDao.deleteCompletedTasks()
+    }
+
+    suspend fun completeTask(taskId: Int, completed: Boolean) {
+        taskDao.updateCompletedTask(taskId, completed)
+    }
+
+    suspend fun checkAllItems(completed: Boolean, ruleSet: Int) {
+        taskDao.checkAllItems(completed, ruleSet)
+    }
+
 }

@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface TaskDao {
 
     @Query("SELECT * FROM task ORDER BY id DESC")
-    fun getAll(): Flow<List<Task>>
+    fun getAll():Flow<List<Task>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTask(task: Task)
@@ -18,5 +18,14 @@ interface TaskDao {
 
     @Update
     suspend fun updateTask(task: Task)
+
+    @Query("DELETE FROM task WHERE isDone = 1")
+    suspend fun deleteCompletedTasks()
+
+    @Query("UPDATE task SET isDone = :completed WHERE id = :taskId")
+    suspend fun updateCompletedTask(taskId: Int, completed: Boolean)
+
+    @Query("UPDATE task SET isDone = :completed WHERE isDone = :ruleSet")
+    suspend fun checkAllItems(completed: Boolean, ruleSet: Int)
 
 }

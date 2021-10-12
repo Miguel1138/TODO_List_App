@@ -1,9 +1,7 @@
 package com.miguelsantos.todewit.ui.fragments.home
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -19,7 +17,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var viewModel: TaskViewModel
-    private val adapter by lazy { TaskListAdapter() }
+    private val adapter by lazy { TaskListAdapter(viewModel) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,6 +77,31 @@ class HomeFragment : Fragment() {
                 setPositiveButton(R.string.action_delete) { _, _ -> viewModel.deleteTask(task) }
                 setNegativeButton(R.string.label_cancel) { dialog, _ -> dialog.cancel() }
             }.show()
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_clear_finished_tasks -> {
+                viewModel.clearCompletedTasks()
+                true
+            }
+
+            //TODO refazer essa parte
+            R.id.action_select_all -> {
+                if (viewModel.areAllItemsChecked()) {
+                    // retira a seleção de todos os itens caso todos já estejam selecionados.
+                    viewModel.checkAllItems(false, 1)
+                } else {
+                    viewModel.checkAllItems(true)
+                }
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
